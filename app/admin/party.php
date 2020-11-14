@@ -10,12 +10,13 @@ if(strlen($adlogin)==0)
 
 else {
 if (isset($_POST['submit']))
-{
+{    $partlogo = $_FILES['part-logo']['name'];
     $partname = $_POST ['part-name'];
     $partdesc = $_POST ['part-desc'];
     $status= 0;
-    $query = mysqli_query($con, "insert into parties(partyname,partydesc,status) values ('$partname', '$partdesc','$status') ");
- var_dump($query); die();
+
+    move_uploaded_file($_FILES["part-logo"]["tmp_name"],"../../library/assets/app/uploads/".$_FILES["part-logo"]["name"] );
+    $query = mysqli_query($con, "insert into parties(partylogo,partyname,partydesc,status) values ('$partlogo','$partname', '$partdesc','$status') ");
     if (!$query){
         $errormsg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Error adding contest category. Please check and try again.</div>';
     }
@@ -23,6 +24,11 @@ if (isset($_POST['submit']))
     else{
         $successmsg= '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Contest category added successfully.</div>';
     }
+}
+if(isset($_GET['del']))
+{
+    mysqli_query($con,"delete from parties where id = '".$_GET['id']."'");
+    $successmsg= '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Political party deleted.</div>';
 }
 ?>
 
@@ -72,11 +78,11 @@ if (isset($_POST['submit']))
                         <h4 class="modal-title">Add Contest Category</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" class="form-horizontal" enctype="multipart/form-data">
-<!--                            <div class="form-group">-->
-<!--                                <label class="form-control-label">Party Logo</label>-->
-<!--                                <input type="file" name="patLogo" id="patLogo" class="form-control" required>-->
-<!--                            </div>-->
+                        <form method="post" class="form-horizontal" enctype="multipart/form-data" accept-charset="utf-8">
+                            <div class="form-group">
+                                <label class="form-control-label">Party Logo</label>
+                                <input type="file" name="part-logo" class="form-control" required>
+                            </div>
                             <div class="form-group">
                                 <label class="form-control-label">Party Name</label>
                                 <input type="text" name="part-name" class="form-control" placeholder="Enter Party Name">
@@ -133,21 +139,23 @@ if (isset($_POST['submit']))
                                 </thead>
                                 <?php
                                 $cts= mysqli_query($con, "select * from parties");
+                                $cnt=1;
                                 while($row = mysqli_fetch_array($cts)){;
                                     ?>
                                     <tbody>
                                     <tr>
-                                        <td><?php echo $row['id'];?></td>
+                                        <td><?php echo $cnt;?></td>
                                         <td><?php echo $row['partyname'];?></td>
                                         <td><?php echo $row['partydesc'];?></td>
-                                            <a href="edit-party.php?id=<?php echo $row['id']?>" class="label label-primary" style="margin:10px;"><i class="fa fa-edit"></i> Edit</a>
-                                            <a class="label label-danger"><i class="fa fa-trash"></i> Delete</a>
+                                        <td>    <a href="edit-party.php?id=<?php echo $row['id']?>" class="label label-primary" style="margin:10px;"><i class="fa fa-edit"></i> Edit</a>
+                                            <a href="party.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="label label-danger"><i class="fa fa-trash"></i> Delete</a>
                                         </td>
                                     </tr>
-
+                                    <?php $cnt=$cnt+1;  ?>
                                     </tbody>
                                 <?php }?>
                             </table>
+
                         </div>
                     </div>
                 </div>

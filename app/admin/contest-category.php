@@ -24,6 +24,12 @@ else {
         $successmsg= '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Contest category added successfully.</div>';
      }
     }
+if(isset($_GET['del']))
+{
+    mysqli_query($con,"delete from contestcat where id = '".$_GET['id']."'");
+    $successmsg= '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Contest category deleted.</div>';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -130,6 +136,7 @@ else {
                                 </thead>
                                 <?php
                                 $cts= mysqli_query($con, "select * from contestcat");
+                                $cnt=1;
                                 while($row = mysqli_fetch_array($cts)){;
                                 ?>
                                 <tbody>
@@ -140,10 +147,10 @@ else {
                                     <td><?php if( $row['status']==0) echo '<div class="badge badge-danger">Not active</div>'; else echo '<div class="badge badge-success">In Progress</div>';?></td>
                                     <td>
                                         <a href="edit-contest.php?id=<?php echo $row['id']?>" class="label label-primary" style="margin:10px;"><i class="fa fa-edit"></i> Edit</a>
-                                        <a class="label label-danger"><i class="fa fa-trash"></i> Delete</a>
+                                        <a href="contest-category.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="label label-danger"><i class="fa fa-trash"></i> Delete</a>
                                     </td>
                                 </tr>
-
+                                <?php $cnt=$cnt+1;  ?>
                                 </tbody>
                                 <?php }?>
                             </table>
