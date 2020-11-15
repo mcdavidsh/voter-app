@@ -62,7 +62,7 @@ include "library/include/home/header.php";
                             <input type="text" name="email"  class="form-control form-control-lg"
                                    placeholder="Email or Phone">
                         </div>
-                        <button type="submit" name="submit" class="btn btn-success btn-lg btn-block" value="Log In">Login</button>
+                        <button type="submit" name="submit" class="btn btn-success btn-lg btn-block" value="Log In">Recover</button>
                     </form>
                     <div class="pt-lg-5 pb-lg-0 text-center text-bold vt-login-fo">
                         <a href="<?php echo $voterlogin;?>" class="forget-pass mr-1">Already Registered?</a> -

@@ -28,6 +28,7 @@
                             <li class="section"><i class="fa fa-gears" aria-hidden="true"></i>Manage Election</li>
                             <li><a href="<?php echo $contestcat;?>">Contest Category</a></li>
                             <li><a href="<?php echo $partycat;?>">Political Parties</a></li>
+                            <li class="line"></li>
                             <li><a href="<?php echo $electionst;?>">Start Election</a></li>
                         </ul>
                     </div>

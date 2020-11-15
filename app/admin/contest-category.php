@@ -117,6 +117,7 @@ if(isset($_GET['del']))
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 
         </div>
+        </div>
             <div class="row p-t-50" style="padding: 20px;">
                 <div class="col-xs-12">
                     <div class="card">
@@ -141,7 +142,7 @@ if(isset($_GET['del']))
                                 ?>
                                 <tbody>
                                 <tr>
-                                    <td><?php echo $row['id'];?></td>
+                                    <td><?php echo $cnt;?></td>
                                     <td><?php echo $row['catname'];?></td>
                                     <td><?php echo $row['catdesc'];?></td>
                                     <td><?php if( $row['status']==0) echo '<div class="badge badge-danger">Not active</div>'; else echo '<div class="badge badge-success">In Progress</div>';?></td>

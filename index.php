@@ -26,7 +26,7 @@ include "library/config/constants.php";
                <div id="dl-menu" class="xv-menuwrapper responsive-menu">
                    <ul class="dl-menu">
 
-                       <li class="text-success"><a href="app/index.php" class="btn btn-light btn-block"><span class="text-success">Login</span></a></li>
+                       <li class="text-success"><a href="app/index.php" class="py-2 btn btn-light btn-block"><span class="text-success">Login</span></a></li>
                    </ul>
                </div>
            </div>
@@ -66,7 +66,7 @@ include "library/config/constants.php";
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="<?php echo $voterreg;?>">Voter</a>
-                        <a class="dropdown-item" href="#">Aspirant</a>
+                        <a class="dropdown-item" href="#">Contestant</a>
                     </div>
                 </div>
             </div>

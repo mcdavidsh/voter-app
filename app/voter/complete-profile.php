@@ -212,6 +212,7 @@ else {
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="submit" name="submit" class="btn btn-success">Save</button>
+                                        <a href="logout.php" class="btn btn-default">Exit</a>
                                     </div>
                                 </div>
                             </div>

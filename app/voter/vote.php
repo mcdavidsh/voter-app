@@ -35,76 +35,89 @@ if ($row['profile']== NULL or $row['profile']==""){
 
         <?php include "../../library/include/app/topnav.php"; ?>
 
-        <!--Notification-->
         <div class="row">
+            <div class="col-xs-12">
+                <div class="timeline">
+                    <div class="content-heading __center">
+                        <div class="title">Active Elections</div>
+                        <div class="description">These are elections that you can particpate in</div>
+                    </div>
+                    <dl>
+                        <?php
+                        $query = mysqli_query($con,"select * from contestcat");
+                        while($rows=mysqli_fetch_array($query)){
+                            ?>
+                            <?php
+                            $id = $rows['id'];
+                            $catnam=$rows['catname'];
+                            $stats=$rows['status'];
+                            if ($stats==0) {
+                                echo "<dt class='disabled item pos-right'>
+                               <div class='marker'></div>
+                                <div class='event'>
+                                    <div class='event-body'>
+                                     $catnam
+                                    </div>
+                                </div>
+                            </dt>";} else {
+
+                            echo"
+
+<dt class= 'item'>
+                                <div class='marker'></div>
+                                <div class='event'>
+                                    <div class='event-body'>
+                                 <a href='vote-details.php?id=$id'>$catnam</a>
+                                    </div>
+                                </div>
+                            </dt>";}
+                            ?>
+                        <?php }?>
+                    </dl>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+                   <div class="col-xs-12">
+                       <div class="title h3 disabled p-b-40">Active Election</div>
+                       <?php
+                       $query = mysqli_query($con,"select * from contestcat");
+                       while($rows=mysqli_fetch_array($query)){
+                       ?>
             <div class="col-md-4">
+
                 <div class="card card-mini shadow vt-card">
+
                     <a href="#">
 
                     <div class="text-center vt-card-img" >
                         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item vt-carousel-item active">
-                                    <img src="../../library/assets/app/assets/images/pages/pdp.png" class="d-block w-100" alt="">
-                                </div>
-                                <div class="carousel-item vt-carousel-item">
-                                    <img src="../../library/assets/app/assets/images/pages/apc.png" class="d-block w-100" alt="">
+
+                                    <img src="../../library/assets/app/uploads/<?php echo $row['partylogo'];?>" class="d-block w-100" alt="">
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="card-body text-center">
-                        <div class="vt-vote-cat">Presidential Election</div> <span class="label label-success d-block p">20 Votes</span>
+                        <div class="vt-vote-cat"><?php echo $rows['catname'];?></div> <span class="label label-success d-block p"><?php echo $rows['status'];?></span>
                     </div
                     </a>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-mini shadow vt-card">
-                    <a href="#">
 
-                        <div class="text-center vt-card-img" >
-                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item vt-carousel-item">
-                                        <img src="../../library/assets/app/assets/images/pages/pdp.png" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item active vt-carousel-item">
-                                        <img src="../../library/assets/app/assets/images/pages/apc.png" class="d-block w-100" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <div class="vt-vote-cat">Governorship Election</div> <span class="label label-success d-block p">1000 Votes</span>
-                        </div
-                    </a>
-                </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-mini shadow vt-card">
-                    <a href="#">
+                       <?php }?>
+           </div>
 
-                        <div class="text-center vt-card-img" >
-                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item  vt-carousel-item active">
-                                        <img src="../../library/assets/app/assets/images/pages/pdp.png" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item  vt-carousel-item">
-                                        <img src="../../library/assets/app/assets/images/pages/apc.png" class="d-block w-100" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <div class="vt-vote-cat">President Election</div> <span class="label label-success d-block p">20 Votes</span>
-                        </div
-                    </a>
-                </div>
-            </div>
         </div>
 
 
         <?php include "../../library/include/app/footer.php" ?>
 <?php }?>
+

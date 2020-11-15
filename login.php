@@ -3,6 +3,11 @@ error_reporting(E_ALL);
 session_start();
 include "library/config/dbconn.php";
 include "library/config/constants.php";
+if(strlen($vtlogin)==0)
+{
+}
+else { header("location:app/voter/index.php");}
+
 
 //if(isset($_POST['submit']))
 //{
@@ -144,7 +149,7 @@ include "library/include/home/header.php";
                     </form>
                     <div class="pt-lg-5 pb-lg-0 text-center text-bold vt-login-fo">
                         <a href="<?php echo $voterreg;?>" class="forget-pass mr-1">Haven't Registered?</a> -
-                        <a href="#" class="forget-pass">Can't Login?</a>
+                        <a href="<?php echo$voterrecovery;?>" class="forget-pass">Can't Login?</a>
                         <a href="<?php echo $homepage;?>" class="forget-pass d-block pt-3">&larr; Go back homepage</a>
 
                     </div>
