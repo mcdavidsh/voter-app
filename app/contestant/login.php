@@ -4,24 +4,24 @@ include "../../library/config/dbconn.php";
 include "../../library/config/constants.php";
 if(isset($_POST['submit']))
 {
-    $ret=mysqli_query($con,"SELECT * FROM manager WHERE username='".$_POST['username']."' and password='".md5($_POST['password'])."'");
+    $ret=mysqli_query($con,"SELECT * FROM contestant WHERE email='".$_POST['eplogin']."' and password='".md5($_POST['password'])."'");
     $num=mysqli_fetch_array($ret);
     if($num>0)
     {
         $extra="dashboard.php";
-        $_SESSION['adlogin']=$_POST['username'];
+        $_SESSION['ctlogin']=$_POST['username'];
         $_SESSION['id']=$num['id'];
         $host=$_SERVER['HTTP_HOST'];
         $uip=$_SERVER['REMOTE_ADDR'];
         $status=1;
-        $log=mysqli_query($con,"insert into userlog(uid,userlogin,userip,status) values('".$_SESSION['id']."','".$_SESSION['adlogin']."','$uip','$status')");
+        $log=mysqli_query($con,"insert into userlog(uid,userlogin,userip,status) values('".$_SESSION['id']."','".$_SESSION['ctlogin']."','$uip','$status')");
         $uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
         header("location:http://$host$uri/$extra");
         exit();
     }
     else
     {
-        $_SESSION['adlogin']=$_POST['username'];
+        $_SESSION['ctlogin']=$_POST['username'];
         $uip=$_SERVER['REMOTE_ADDR'];
         $status=0;
         mysqli_query($con,"insert into userlog(userlogin,userip,status) values('".$_SESSION['adlogin']."','$uip','$status')");
@@ -86,7 +86,7 @@ if(isset($_POST['submit']))
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">
                 <i class="fa fa-user" aria-hidden="true"></i></span>
-              <input type="text" name="username" class="form-control" placeholder="Username" aria-describedby="Username">
+              <input type="email" name="eplogin" class="form-control" placeholder="Email" aria-describedby="Username">
             </div>
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">

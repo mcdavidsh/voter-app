@@ -155,6 +155,19 @@ footer.vt-footer {
 section.vt-tl {
     background: #f7f7f7;
 }
+.timeline dl > dt.item .marker-danger {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    margin-left: -15px;
+    border-radius: 15px;
+    margin-top: 15px;
+    z-index: 1007;
+    border: 4px solid #FFF;
+    box-shadow: 0 1px 1px rgba(68, 68, 68, 0.05);
+ background-color: #f50057;
+}
 /*Register  page*/
 
 .hide-show {

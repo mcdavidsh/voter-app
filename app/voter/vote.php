@@ -53,10 +53,10 @@ if ($row['profile']== NULL or $row['profile']==""){
                             $stats=$rows['status'];
                             if ($stats==0) {
                                 echo "<dt class='disabled item pos-right'>
-                               <div class='marker'></div>
+                               <div class='marker-danger'></div>
                                 <div class='event'>
                                     <div class='event-body'>
-                                     $catnam
+                                     $catnam 
                                     </div>
                                 </div>
                             </dt>";} else {
@@ -65,9 +65,12 @@ if ($row['profile']== NULL or $row['profile']==""){
 
 <dt class= 'item'>
                                 <div class='marker'></div>
-                                <div class='event'>
+                                <div class='event' style='cursor:pointer;'>
                                     <div class='event-body'>
-                                 <a href='vote-details.php?id=$id'>$catnam</a>
+                                 <a class='text-dark h4' href='vote-details.php?id=$id'>$catnam
+                                 <div class='label label-warning pull-right' style='margin-left: 5px;'> $stats Votes</div>
+                                 <div class='label label-primary pull-right'> $stats Contestants</div>
+                                </a>
                                     </div>
                                 </div>
                             </dt>";}
