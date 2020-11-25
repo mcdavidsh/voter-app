@@ -49,53 +49,6 @@ if(isset($_GET['del']))
 
 
         <div class="row">
-            <div class="col-lg-12">
-                <?php
-                if (isset($successmsg)) {
-                    echo $successmsg;
-                }
-                unset($successmsg);
-                ?>
-                <?php
-                if (isset($errormsg)){
-                    echo $errormsg;}
-                unset($errormsg);
-                ?>
-                <div class="card">
-                    <div class="card-body app-heading">
-                        <div class="app-title">
-                            <span data-toggle="modal" data-target="#add-category" style="border: 1px solid #29c75f !important; padding: 20px; color: #18aa4a; font-size: 20px; cursor: pointer;"><i class="fa fa-plus"></i> Add New</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="add-category" tabindex="-1" role="dialog" aria-labelledby="Add Contest Category">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Add Contest Category</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" class="form-horizontal">
-                            <div class="form-group">
-                                <label class="form-control-label">Category Name</label>
-                                <input type="text" name="cat-name" class="form-control" placeholder="Enter Category Name">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Category Description</label>
-                                <textarea name="cat-desc" rows="5" class="form-control"></textarea>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" name="submit" class="btn btn-sm btn-success">Create</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--        Modal ends-->
-        <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 
             </div>
@@ -109,7 +62,7 @@ if(isset($_GET['del']))
                     <div class="card-body text-center vt-box">
                         <div class="text-decoration-none"><?php echo htmlentities($num1);?></div>
 
-                        <div class="text-capitalize ">Total Votersh</div>
+                        <div class="text-capitalize ">Total Voters</div>
                     </div>
                 </a>
 

@@ -87,7 +87,7 @@ echo '
                         <div class="title">Dashboard</div>
                     </a>
                 </li>
-                <li class="<?php if (basename($_SERVER['PHP_SELF'])==$vote) echo 'active';?>">
+                <li class="<?php if (basename($_SERVER['PHP_SELF'])==$vote || basename($_SERVER['PHP_SELF'])==$votebo || basename($_SERVER['PHP_SELF'])==$votedet ) echo 'active';?>">
                     <a href="<?php echo $vote;?>">
                         <div class="icon">
                             <i class="fa fa-inbox" aria-hidden="true"></i>

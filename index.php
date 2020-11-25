@@ -6,7 +6,7 @@ include "library/config/constants.php";
 <html lang="en">
 <head>
     <?php
-    echo "<title>$sitename</title>";
+    echo "<title>$sitename - Your Vote Counts</title>";
     include "library/include/home/header.php";
     ?>
 </head>
@@ -17,7 +17,11 @@ include "library/config/constants.php";
 <div class="nav-absolute nav-fixed">
     <!-- Header -->
     <nav class="mainnav navbar navbar-default justify-content-between">
-       <div class="container relative">
+        <div class="container relative">
+            <a class="offcanvas dl-trigger paper-nav-toggle text-white" type="button" data-toggle="offcanvas"
+               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="color: #ffffff;">
+                <i class="text-white"></i>
+            </a>
            <a class="navbar-brand text-white text-center d-block align-top" href="index.php">
               <?php echo $sitelogo?>
 <!--               <span class="h2 ml-1">INEC</span>-->
@@ -66,7 +70,7 @@ include "library/config/constants.php";
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="<?php echo $voterreg;?>">Voter</a>
-                        <a class="dropdown-item" href="#">Contestant</a>
+                        <a class="dropdown-item" href="<?php echo $cetreg;?>">Contestant</a>
                     </div>
                 </div>
             </div>

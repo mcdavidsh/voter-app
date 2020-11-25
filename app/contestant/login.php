@@ -1,15 +1,30 @@
 <?php
+error_reporting(E_ALL);
 session_start();
 include "../../library/config/dbconn.php";
 include "../../library/config/constants.php";
+
 if(isset($_POST['submit']))
 {
     $ret=mysqli_query($con,"SELECT * FROM contestant WHERE email='".$_POST['eplogin']."' and password='".md5($_POST['password'])."'");
     $num=mysqli_fetch_array($ret);
+    
     if($num>0)
+    {  if ($num['status']=="")
     {
-        $extra="dashboard.php";
-        $_SESSION['ctlogin']=$_POST['username'];
+        $errormsg='<div class="alert alert-danger" role="alert">Your Account is not approved yet.</div>';
+    }
+
+        if($num['profile']==1){
+
+            $extra="index.php";
+        }else{
+
+
+            $extra="complete-profile.php";
+        }
+
+        $_SESSION['ctlogin']=$_POST['eplogin'];
         $_SESSION['id']=$num['id'];
         $host=$_SERVER['HTTP_HOST'];
         $uip=$_SERVER['REMOTE_ADDR'];
@@ -21,95 +36,99 @@ if(isset($_POST['submit']))
     }
     else
     {
-        $_SESSION['ctlogin']=$_POST['username'];
+        $_SESSION['ctlogin']=$_POST['eplogin'];
         $uip=$_SERVER['REMOTE_ADDR'];
         $status=0;
-        mysqli_query($con,"insert into userlog(userlogin,userip,status) values('".$_SESSION['adlogin']."','$uip','$status')");
+        mysqli_query($con,"insert into userlog(userlogin,userip,status) values('".$_SESSION['ctlogin']."','$uip','$status')");
         $errormsg='<div class="alert alert-danger" role="alert">Invalid username or password</div>';
-        $extra="index.php";
+        $extra="login.php";
 
     }
 }
 
 
+
+if(isset($_POST['change']))
+{
+    $email=$_POST['email'];
+    $contact=$_POST['contact'];
+    $password=md5($_POST['password']);
+    $query=mysqli_query($con,"SELECT * FROM users WHERE userEmail='$email' and contactNo='$contact'");
+    $num=mysqli_fetch_array($query);
+    if($num>0)
+    {
+        mysqli_query($con,"update users set password='$password' WHERE userEmail='$email' and contactNo='$contact' ");
+        $msg='<div class="alert alert-success" role="alert">Password Changed Successfully</div>';
+
+    }
+    else
+    {
+        $errormsg='<div class="alert alert-danger" role="alert">Invalid email id or Contact no</div>';
+    }
+}
+
+
+
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="INEC" content="Voter Registration">
-    <meta name="Mcdavid" content="www.softhood.net/david">
-    <link rel="icon" href="<?php echo $favico_app;?>" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/vendor.css">
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/image-uploader/style.css">
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/img-upload.css">
-    <title>Admin  <?php echo $pageTitle; ?></title>
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/filepond-plugin-image-preview.min.css">
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/filepond.min.css">
-    <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/nornalize.min.css">
-    <link rel="stylesheet" href="../../library/assets/home/css/custom.css">
-
+    <?php
+    echo "<title>$pageTitle</title>";
+    include "../../library/include/home/ct-header.php";
+    ?>
 </head>
-<body>
-  <div class="app app-default">
+<body >
+<!-- Pre loader -->
+<?php echo $preloader; ?>
 
-<div class="app-container app-login">
-  <div class="flex-center">
-    <div class="app-header"></div>
-    <div class="app-body">
-      <div class="loader-container text-center">
-          <div class="icon">
-            <div class="sk-folding-cube">
-                <div class="sk-cube1 sk-cube"></div>
-                <div class="sk-cube2 sk-cube"></div>
-                <div class="sk-cube4 sk-cube"></div>
-                <div class="sk-cube3 sk-cube"></div>
-              </div>
-            </div>
-          <div class="title">Logging in...</div>
-      </div>
-      <div class="app-block">
-      <div class="app-form">
-        <div class="form-header">
-          <div class="app-brand"><span class="highlight">INEC</span> Admin</div>
-        </div>
-          <?php if(isset($errormsg)){
-              echo $errormsg;
-          }?>
+<div id="app" class="paper-loading ">
+    <main>
+        <div id="primary" class="p-t-b-50 height-full ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mx-md-auto">
+                        <div class="text-center vt-login">
+                            <?php echo $sitelogo_app?>
+                            <h2 class="py-5">Every Vote Matters</h2>
+                            <!--                        <p class="p-t-b-20">-->
+                            <!--                            </p>-->
+                        </div>
+                        <?php if(isset($errormsg)){
+                            echo $errormsg;
+                        }?>
 
-          <?php if(isset($msg)){
-              echo ($msg);
-          }?>
-        <form method="post">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <i class="fa fa-user" aria-hidden="true"></i></span>
-              <input type="email" name="eplogin" class="form-control" placeholder="Email" aria-describedby="Username">
+                        <?php if(isset($msg)){
+                            echo ($msg);
+                        }?>
+                        <form method="post">
+                            <div class="form-group has-icon"><i class="icon-user"></i>
+                                <input type="email" name="eplogin"  class="form-control form-control-lg"
+                                       placeholder="Enter Email">
+                            </div>
+                            <div class="form-group has-icon"><i class="icon-asterisk"></i>
+
+                                <input type="password" name="password" placeholder="Enter Password" class="form-control form-control-lg"
+                                       placeholder="Password">
+                                <div class="hide-show">
+                                    <span>Show</span>
+                                </div>
+                            </div>
+                            <button type="submit" name="submit" class="btn btn-success btn-lg btn-block" value="Log In">Login</button>
+                        </form>
+                        <div class="pt-lg-5 pb-lg-0 text-center text-bold vt-login-fo">
+                            <a href="<?php echo $voterreg;?>" class="forget-pass mr-1">Haven't Registered?</a> -
+                            <a href="<?php echo$voterrecovery;?>" class="forget-pass">Can't Login?</a>
+                            <a href="<?php echo '../../index.php';?>" class="forget-pass d-block pt-3">&larr; Go back homepage</a>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon2">
-                <i class="fa fa-key" aria-hidden="true"></i></span>
-              <input type="password" name="password" class="form-control" placeholder="Password" aria-describedby="Password">
-            </div>
-            <div class="text-center">
-                <button type="submit" name="submit" class="btn btn-success btn-submit">Login</button>
-            </div>
-        </form>
         </div>
-      </div>
-      </div>
-    </div>
-    <div class="app-footer">
-    </div>
-  </div>
+        <!-- #primary -->
+    </main>
+
 </div>
-
-  </div>
-  
-<!--  <script type="text/javascript" src="../../library/assets/app/assets/js/vendor.js"></script>-->
-<!--  <script type="text/javascript" src="../../library/assets/app/assets/js/app.js"></script>-->
-
-</body>
-</html>
+<!--End Page page_wrrapper -->
+<?php include "../../library/include/home/ct-footer.php"; ?>

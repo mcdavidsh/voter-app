@@ -9,12 +9,12 @@
 <!--    Loader Begins-->
     <?php
     $status =1;
-    $query=  "select * from voters where profile=$status and (email='".$_SESSION['vtlogin']."' or phone='".$_SESSION['vtlogin']."')";
+    $query=  "select * from contestant where profile=$status and email='".$_SESSION['ctlogin']."'";
     $result =mysqli_query($con, $query);
     $row = mysqli_fetch_array($result);
     ?>
     <?php
-    if($row['profile']== NULL or $row['profile']=="" )
+    if($row['profile']== 0 or $row['profile']=="" )
     {
 echo '
  <div class="card-body __loading">
@@ -87,13 +87,20 @@ echo '
                         <div class="title">Dashboard</div>
                     </a>
                 </li>
-                <li class="<?php if (basename($_SERVER['PHP_SELF'])==$vote) echo 'active';?>">
-                    <a href="<?php echo $vote;?>">
+                <li class="dropdown <?php if (basename($_SERVER['PHP_SELF'])==$contest|| basename($_SERVER['PHP_SELF'])==$electresult ) echo 'active';?>">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="icon">
                             <i class="fa fa-inbox" aria-hidden="true"></i>
                         </div>
-                        <div class="title">Vote</div>
+                        <div class="title">Election</div>
                     </a>
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li class="section"><i class="fa fa-gears" aria-hidden="true"></i>Manage Election</li>
+                            <li><a href="<?php echo $contest;?>">Contest</a></li>
+                            <li><a href="<?php echo $electresult;?>">Result</a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="<?php if (basename($_SERVER['PHP_SELF'])==$profile) echo 'active';?>">
                     <a href="<?php echo $profile;?>">

@@ -16,7 +16,8 @@ if (isset($_POST['submit']))
     $status= 0;
 
     move_uploaded_file($_FILES["part-logo"]["tmp_name"],"../../library/assets/app/uploads/".$_FILES["part-logo"]["name"] );
-    $query = mysqli_query($con, "insert into parties(partylogo,partyname,partydesc,status) values ('$partlogo','$partname', '$partdesc','$status') ");
+    $result = "insert into parties(partylogo,partyname,partydesc,status) values ('$partlogo','$partname', '$partdesc','$status') ";
+    $query = mysqli_query($con, $result);
     if (!$query){
         $errormsg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Error adding contest category. Please check and try again.</div>';
     }

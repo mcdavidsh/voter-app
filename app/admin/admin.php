@@ -3,31 +3,41 @@ session_start();
 include "../../library/config/dbconn.php";
 include "../../library/config/constants.php";
 
-if(strlen($adlogin)==0)
+if (strlen($adlogin) == 0)
 {
     header("location:../index.php");
 }
 
 else {
-if (isset($_POST['submit']))
-{
-    $catname = $_POST ['cat-name'];
-    $catdesc = $_POST ['cat-desc'];
-    $status= 0;
-    $query = mysqli_query($con, "insert into contestcat(catname,catdesc,status) values ('$catname', '$catdesc','$status') ");
+    $usern="";
+if (isset($_POST['submit'])) {
 
-    if (!$query){
-        $errormsg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Error adding contest category. Please check and try again.</div>';
+    $profilepix = $_FILES['profilepix']['name'];
+    $catname = $_POST['username'];
+    $catdesc = $_POST['fullname'];
+    $pwd = md5($_POST['pass']);
+
+    move_uploaded_file($_FILES["profilepix"]["tmp_name"],"../../library/assets/app/uploads/".$_FILES["profilepix"]["name"] );
+
+    $chk="select * from manager where username='$usern'";
+    $result=mysqli_query($con, $chk);
+    if (mysqli_num_rows($result) > 0){
+        $errormsg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Username Already Exists. Check and try again.</div>';
     }
-
     else{
-        $successmsg= '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Contest category added successfully.</div>';
+    $query = mysqli_query($con, "insert into manager(username,fullname,password,profilepix) values ('$catname', '$catdesc','$pwd','$profilepix') ");
+
+
+    if (!$query) {
+        $errormsg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Error creating Admin. Please check and try again.</div>';
+    } else {
+        $successmsg = '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Admin created successfully.</div>';
     }
 }
-if(isset($_GET['del']))
-{
-    mysqli_query($con,"delete from manager where id = '".$_GET['id']."'");
-    $successmsg= '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Contest category deleted.</div>';
+}
+if (isset($_GET['del'])) {
+    mysqli_query($con, "delete from manager where id = '" . $_GET['id'] . "'");
+    $successmsg = '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Admin deleted.</div>';
 }
 
 ?>
@@ -38,6 +48,34 @@ if(isset($_GET['del']))
     <?php
     include "../../library/include/app/ad-header.php";
     ?>
+    <style>
+        /*
+ * FilePond Custom Styles
+ */
+
+        .filepond--drop-label {
+            color: #4c4e53;
+        }
+
+        .filepond--label-action {
+            text-decoration-color: #babdc0;
+        }
+
+        .filepond--panel-root {
+            background-color: #edf0f4;
+        }
+
+
+        /**
+         * Page Styles
+         */
+
+        .filepond--root {
+            width: 170px;
+            margin: 0 auto;
+        }
+
+    </style>
 </head>
 <body>
 <div class="app app-default" style="overflow-y: scroll; min-height: 900px ; ">
@@ -57,14 +95,17 @@ if(isset($_GET['del']))
                 unset($successmsg);
                 ?>
                 <?php
-                if (isset($errormsg)){
-                    echo $errormsg;}
+                if (isset($errormsg)) {
+                    echo $errormsg;
+                }
                 unset($errormsg);
                 ?>
                 <div class="card">
                     <div class="card-body app-heading">
                         <div class="app-title">
-                            <span data-toggle="modal" data-target="#add-category" style="border: 1px solid #29c75f !important; padding: 20px; color: #18aa4a; font-size: 20px; cursor: pointer;"><i class="fa fa-plus"></i> Add New</span>
+                            <span data-toggle="modal" data-target="#add-category"
+                                  style="border: 1px solid #29c75f !important; padding: 20px; color: #18aa4a; font-size: 20px; cursor: pointer;"><i
+                                        class="fa fa-plus"></i> Add New</span>
                         </div>
                     </div>
                 </div>
@@ -74,18 +115,33 @@ if(isset($_GET['del']))
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Add Contest Category</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add New Admin</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" class="form-horizontal">
+                        <form method="post" class="form-horizontal" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label class="form-control-label">Category Name</label>
-                                <input type="text" name="cat-name" class="form-control" placeholder="Enter Category Name">
+                                <input type="file" class="form-control" name="profilepix" accept=".png, .jpg, .jpeg"/>
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label">Category Description</label>
-                                <textarea name="cat-desc" rows="5" class="form-control"></textarea>
+                                <label class="form-control-label">Username</label>
+                                <input type="text" name="username" class="form-control" placeholder="Enter Username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Fullname</label>
+                                <input type="text" name="fullname" class="form-control" placeholder="Enter Fullname">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Password</label>
+                                <input type="password" name="pass" class="form-control" placeholder="Enter Password"
+                                       id="shpwd">
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="checkbox2" onclick="shPwd()">
+                                <label for="checkbox2">
+                                    Show Password
+                                </label>
                             </div>
                             <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
                             <button type="submit" name="submit" class="btn btn-sm btn-success">Create</button>
@@ -103,11 +159,11 @@ if(isset($_GET['del']))
                 <a class="card">
 
                     <?php
-                    $query= mysqli_query($con, "select * from manager");
-                    $num1=mysqli_num_rows($query);
+                    $query = mysqli_query($con, "select * from manager");
+                    $num1 = mysqli_num_rows($query);
                     ?>
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none"><?php echo htmlentities($num1);?></div>
+                        <div class="text-decoration-none"><?php echo htmlentities($num1); ?></div>
 
                         <div class="text-capitalize ">Total Admin</div>
                     </div>
@@ -130,26 +186,31 @@ if(isset($_GET['del']))
                                     <th>S/N</th>
                                     <th>Username</th>
                                     <th>Fullname</th>
+                                    <th>Date Created</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <?php
-                                $cts= mysqli_query($con, "select * from manager");
-                                $cnt=1;
-                                while($row = mysqli_fetch_array($cts)){;
+                                $cts = mysqli_query($con, "select * from manager");
+                                $cnt = 1;
+                                while ($row = mysqli_fetch_array($cts)) {
+                                    ;
                                     ?>
                                     <tbody>
                                     <tr>
-                                        <td><?php echo $cnt;?></td>
-                                        <td><?php echo $row['username'];?></td>
-                                        <td><?php echo $row['fullname'];?></td>
-                                           <td> <a href="edit-contest.php?id=<?php echo $row['id']?>" class="label label-primary" style="margin:10px;"><i class="fa fa-edit"></i> Edit</a>
-                                            <a href="contest-category.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')" class="label label-danger"><i class="fa fa-trash"></i> Delete</a>
+                                        <td><?php echo $cnt; ?></td>
+                                        <td><?php echo $row['username']; ?></td>
+                                        <td><?php echo $row['fullname']; ?></td>
+                                        <td><?php echo $row['dateoc']; ?></td>
+                                        <td>
+                                            <a href="admin.php?id=<?php echo $row['id'] ?>&del=delete"
+                                               onClick="return confirm('Are you sure you want to delete?')"
+                                               class="label label-danger"><i class="fa fa-trash"></i> Delete</a>
                                         </td>
                                     </tr>
-                                    <?php $cnt=$cnt+1;  ?>
+                                    <?php $cnt = $cnt + 1; ?>
                                     </tbody>
-                                <?php }?>
+                                <?php } ?>
                             </table>
                         </div>
                     </div>
@@ -157,7 +218,8 @@ if(isset($_GET['del']))
             </div>
 
             <?php include "../../library/include/app/footer.php" ?>
-            <?php }?>
+
+            <?php } ?>
 
 
 

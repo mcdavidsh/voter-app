@@ -67,44 +67,53 @@ if ($hour > 17) {
 
         <div class="py-5"></div>
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12"  data-toggle="tooltip" data-placement="bottom" title="Election in progress">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" >
                 <a class="card">
 
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">3</div>
-                        <div class="text-capitalize ">Total Users</div>
+                        <?php $usr=mysqli_query($con, "select * from manager");
+
+                        $num=mysqli_num_rows($usr);
+
+                        ?>
+                        <div class="text-decoration-none"><?php echo $num; ?></div>
+                        <div class="text-capitalize ">Total Admin</div>
                     </div>
                 </a>
-
             </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" >
                 <a class="card">
-                    <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">5</div>
-                        <div class="text-capitalize ">Total Voters</div>
-                    </div>
-                </a>
 
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" data-toggle="tooltip" data-placement="bottom" title="This is Elections you have voted in.">
-                <a class="card">
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">2</div>
+                        <?php $usr=mysqli_query($con, "select * from contestant");
+
+                        $num=mysqli_num_rows($usr);
+
+                        ?>
+                        <div class="text-decoration-none"><?php echo $num; ?></div>
                         <div class="text-capitalize ">Total Contestants</div>
                     </div>
                 </a>
 
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" data-toggle="tooltip" data-placement="bottom" title="This is Elections you have voted in.">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" >
                 <a class="card">
+
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">3737</div>
-                        <div class="text-capitalize ">Total Votes</div>
+                        <?php $usr=mysqli_query($con, "select * from voters");
+
+                        $num=mysqli_num_rows($usr);
+
+                        ?>
+                        <div class="text-decoration-none"><?php echo $num; ?></div>
+                        <div class="text-capitalize ">Total Voters</div>
                     </div>
                 </a>
 
             </div>
+
+
+
         </div>
 
 

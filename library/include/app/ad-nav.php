@@ -66,7 +66,7 @@
 <!--                        </ul>-->
 <!--                    </div>-->
                 </li>
-                <li class="dropdown <?php if (basename($_SERVER['PHP_SELF'])==$votersprofile || basename($_SERVER['PHP_SELF'])==$contestprofile || basename($_SERVER['PHP_SELF'])==$adminprofile) echo 'active';?>">
+                <li class="dropdown <?php if (basename($_SERVER['PHP_SELF'])==$votersprofile || basename($_SERVER['PHP_SELF'])==$contestprofile || basename($_SERVER['PHP_SELF'])==$adminprofile || basename($_SERVER['PHP_SELF'])==$settings) echo 'active';?>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="icon">
                             <i class="fa fa-users" aria-hidden="true"></i>
@@ -80,7 +80,7 @@
                             <li><a href="<?php echo $contestprofile;?>">Contestants</a></li>
                             <li><a href="<?php echo $adminprofile;?>">Administrators</a></li>
                             <li class="line"></li>
-                            <li><a href="<?php echo $adminprofile;?>">Settings</a></li>
+                            <li><a href="<?php echo $settings;?>">Settings</a></li>
                         </ul>
                     </div>
                 </li>
@@ -106,4 +106,5 @@
         </div>
     </footer>
 </aside>
+
 

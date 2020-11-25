@@ -8,7 +8,7 @@ include "../../library/config/constants.php";
 
 
 
-if(strlen($vtlogin)==0)
+if(strlen($ctlogin)==0)
 {
     header("location:../../login.php");
 }
@@ -16,7 +16,7 @@ else
 {
 
 $status = 1;
-$query = mysqli_query($con, "select * from voters where profile=$status and (email='".$_SESSION['vtlogin']."' or phone='".$_SESSION['vtlogin']."')");
+$query = mysqli_query($con, "select * from contestant where profile=$status and email='".$_SESSION['ctlogin']."'");
 $row = mysqli_fetch_array($query);
 
 if ($row['profile'] == 1) {
@@ -30,19 +30,16 @@ window.location.href="dashboard.php"
 if (isset($_POST['submit']))
 {
 
-    $work=$_POST['works'];
+    $ctrole=$_POST['contestrole'];
     $dob=$_POST['dob'];
-    $state=$_POST['states'];
+    $state=$_POST['state'];
     $lga=$_POST['lga'];
-    $address=$_POST['address'];
-    $socialtw=$_POST['socialtw'];
-    $socialfb=$_POST['socialfb'];
     $ward=$_POST['ward'];
     $gender=$_POST['gender'];
     $profilepix=$_FILES["profilepix"]["name"];
     $profile=1;
     move_uploaded_file($_FILES["profilepix"]["tmp_name"],"../../library/assets/app/uploads/".$_FILES["profilepix"]["name"]);
-    $query = mysqli_query($con, "update voters set profilepix ='$profilepix',works='$work',dob='$dob',states='$state',lga='$lga',address='$address',socialtw='$socialtw',socialfb='$socialfb',profile='$profile',ward='$ward',gender='$gender' where email ='".$_SESSION['vtlogin']."' or phone='".$_SESSION['vtlogin']."' ");
+    $query = mysqli_query($con, "update contestant set profilepix ='$profilepix',contestrole='$ctrole',dob='$dob',state='$state',lga='$lga',profile='$profile',ward='$ward',gender='$gender' where email ='".$_SESSION['ctlogin']."'");
 
 //die();
     echo '<script>alert("Profile Successfully Completed. You can now start voting.")
@@ -59,7 +56,7 @@ else {
 <html>
 <head>
     <?php
-    include "../../library/include/app/header.php";
+    include "../../library/include/app/ct-header.php";
     ?>
     <link href="state-selector/assets/css/style.css" rel="stylesheet" type="text/css" />
     <script src="state-selector/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -68,12 +65,12 @@ else {
 <body>
 <div class="app app-default" style="overflow-y: scroll; height: 500px;">
 
-    <?php include "../../library/include/app/nav.php"; ?>
+    <?php include "../../library/include/app/ct-nav.php"; ?>
 
     <div class="app-container">
 
         <?php
-        include "../../library/include/app/topnav.php"; ?>
+        include "../../library/include/app/ct-topnav.php"; ?>
 
         <!--Notification-->
 
@@ -88,7 +85,7 @@ else {
 
                         <form class="form form-horizontal" method="post" enctype="multipart/form-data">
                             <div class="section">
-                                <div class="section-title">Voter Information -
+                                <div class="section-title">Contestant Information -
                                     <small style="padding-left: 10px;" class="text-success">Makes sure that all
                                         information is enterted correctly.</small>
                                 </div>
@@ -124,13 +121,13 @@ else {
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Date Of Birth</label>
                                         <div class="col-md-6">
-                                            <input type="date" name="dob" class="form-control" placeholder="">
+                                            <input type="date" id="myDate" name="dob" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Occupation</label>
+                                        <label class="col-md-3 control-label">Contest Role</label>
                                         <div class="col-md-6">
-                                            <input type="text" name="works" class="form-control" placeholder="">
+                                            <input type="text" name="contestrole" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +139,7 @@ else {
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">State of origin</label>
                                         <div class="col-md-6 col-sm-4">
-                                            <select class="select2" name="states" id="country-list" onChange="getState(this.value);">
+                                            <select class="select2" name="state" id="country-list" onChange="getState(this.value);">
                                                 <option value disabled selected>Select State</option>
                                                 <?php
                                                 foreach ($countryResult as $country) {
@@ -172,35 +169,35 @@ else {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-3">
-                                            <label class="control-label">Home Address</label>
-                                            <p class="control-label-help">( short detail of products , 150 max words
-                                                )</p>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="address" rows="6"></textarea>
-                                        </div>
-                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <div class="col-md-3">-->
+<!--                                            <label class="control-label">Home Address</label>-->
+<!--                                            <p class="control-label-help">( short detail of products , 150 max words-->
+<!--                                                )</p>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-8">-->
+<!--                                            <textarea class="form-control" name="address" rows="6"></textarea>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
-                            <div class="section">
-                                <div class="section-title">Social Networks</div>
-                                <div class="section-body">
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Facebook</label>
-                                        <div class="col-md-6">
-                                            <input type="text" name="socialfb" class="form-control" placeholder="" value="http://">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Twitter</label>
-                                        <div class="col-md-6">
-                                            <input type="text" name="socialtw" class="form-control" placeholder="" value="http://">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="section">-->
+<!--                                <div class="section-title">Social Networks</div>-->
+<!--                                <div class="section-body">-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label class="col-md-3 control-label">Facebook</label>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <input type="text" name="socialfb" class="form-control" placeholder="" value="http://">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label class="col-md-3 control-label">Twitter</label>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <input type="text" name="socialtw" class="form-control" placeholder="" value="http://">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="form-footer">
                                 <div class="checkbox">
                                     <input type="checkbox" id="checkbox2" required>
@@ -211,7 +208,8 @@ else {
 
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
-                                        <button type="submit" name="submit" class="btn btn-success">Save</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Save & Continue</button>
+                                        <a href="logout.php" class="btn btn-default">Exit</a>
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +223,7 @@ else {
         <?php include "../../library/include/app/footer.php" ?>
         <script type="text/JavaScript">
 
-
+            document.getElementById("myDate").max = "2014-01-01";
         </script>
 
 <?php }?>

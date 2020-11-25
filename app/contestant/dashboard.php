@@ -3,7 +3,7 @@ session_start();
 include "../../library/config/dbconn.php";
 include "../../library/config/constants.php";
 
-if(strlen($adlogin)==0)
+if(strlen($ctlogin)==0)
 {
 header("location:index.php");
 }
@@ -28,17 +28,17 @@ if ($hour > 17) {
 <html>
 <head>
     <?php
-    include "../../library/include/app/ad-header.php";
+    include "../../library/include/app/ct-header.php";
     ?>
 </head>
 <body>
 <div class="app app-default" style="overflow-y: scroll; min-height: 900px ; ">
 
-    <?php include "../../library/include/app/ad-nav.php"; ?>
+    <?php include "../../library/include/app/ct-nav.php"; ?>
 
     <div class="app-container">
 
-        <?php include "../../library/include/app/ad-topnav.php"; ?>
+        <?php include "../../library/include/app/ct-topnav.php"; ?>
 
         <!--Notification-->
 
@@ -50,12 +50,12 @@ if ($hour > 17) {
                 <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
-                                <?php $query=mysqli_query($con,"select fullName from manager where username='".$_SESSION['adlogin']."'");
+                                <?php $query=mysqli_query($con,"select fullName from contestant where email='".$_SESSION['ctlogin']."'");
                                while($row=mysqli_fetch_array($query))
                                {
                                 ?>
                                 <div class="vt-card-title"><?php echo $greetings;?>,
-                                    <?php echo ucwords('Admin' .' '. $row['fullName']);?>
+                                    <?php echo ucwords( $row['fullName']);?>
                                     <?php } ?>
                                 </div>
 
@@ -67,40 +67,40 @@ if ($hour > 17) {
 
         <div class="py-5"></div>
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12"  data-toggle="tooltip" data-placement="bottom" title="Election in progress">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <a class="card">
-
+                    <div class="badge badge-success">Active</div>
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">3</div>
-                        <div class="text-capitalize ">Total Users</div>
+                        <?php $ct = mysqli_query($con, "select contestreg.*,contestcat.catname from contestreg left join contestcat on contestcat.id=contestreg.ctcatid where contestreg.contestantid ='" . $_SESSION['id'] . "'");
+                        $nums = mysqli_num_rows($ct);
+                        $nae = mysqli_fetch_array($ct);
+                        ?>
+
+                        <!--                        <div class="text-decoration-none">--><?php //echo $nums; ?><!--</div>-->
+
+                        <div class="text-capitalize small"> <?php echo $nae['catname'] ?></div>
                     </div>
                 </a>
 
             </div>
 
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <a class="card">
+                <a class="card" href="contest.php">
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">5</div>
-                        <div class="text-capitalize ">Total Voters</div>
+                        <i class="fa fa-registered"></i>
+                        <div class="text-capitalize ">Contest</div>
                     </div>
                 </a>
 
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" data-toggle="tooltip" data-placement="bottom" title="This is Elections you have voted in.">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" >
                 <a class="card">
+                    <div class="badge badge-success ">Total Votes</div>
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">2</div>
-                        <div class="text-capitalize ">Total Contestants</div>
-                    </div>
-                </a>
-
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" data-toggle="tooltip" data-placement="bottom" title="This is Elections you have voted in.">
-                <a class="card">
-                    <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">3737</div>
-                        <div class="text-capitalize ">Total Votes</div>
+                        <?php $ct=mysqli_query($con, "select * from votes where contestantid ='".$_SESSION['id']."'");
+                        $nums=mysqli_num_rows($ct);
+                        ?>
+                        <div class="text-decoration-none"><?php echo $nums;?></div>
                     </div>
                 </a>
 

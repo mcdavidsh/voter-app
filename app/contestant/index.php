@@ -4,7 +4,7 @@ session_start();
 include "../../library/config/dbconn.php";
 include "../../library/config/constants.php";
 
-if (!$adlogin){
+if (!$ctlogin){
     header("location:login.php");
 }
 else {

@@ -3,14 +3,14 @@ session_start();
 include "../../library/config/dbconn.php";
 include "../../library/config/constants.php";
 
-if(strlen($vtlogin)==0)
+if(strlen($ctlogin)==0)
 {
     header("location:../../login.php");
 }
 
 else {
 $status =1;
-$query_value = "select * from voters where profile=$status and (email='".$_SESSION['vtlogin']."' or phone='".$_SESSION['vtlogin']."')" ;
+$query_value = "select * from contestant where profile=$status and email='".$_SESSION['ctlogin']."'" ;
 $query = mysqli_query($con,$query_value);
 $row=mysqli_fetch_array($query);
 
@@ -25,20 +25,20 @@ if ($row['profile']== NULL or $row['profile']==""){
 <html>
 <head>
     <?php
-    include "../../library/include/app/header.php";
+    include "../../library/include/app/ct-header.php";
     ?>
 </head>
 <body>
   <div class="app app-default" style="overflow-y: scroll; height: 500px;">
-      <?php include "../../library/include/app/nav.php"; ?>
+      <?php include "../../library/include/app/ct-nav.php"; ?>
 <div class="app-container">
-    <?php include "../../library/include/app/topnav.php"; ?>
+    <?php include "../../library/include/app/ct-topnav.php"; ?>
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body app-heading fixed-top">
             <?php
-            $img = mysqli_query($con,"select * from voters where email='".$_SESSION['vtlogin']."' or phone='".$_SESSION['vtlogin']."'");
+            $img = mysqli_query($con,"select * from contestant where email='".$_SESSION['ctlogin']."'");
             while($row=mysqli_fetch_array($img)){
 
             $userpix = $row['profilepix'];
@@ -95,18 +95,18 @@ if ($row['profile']== NULL or $row['profile']==""){
 <!--                      <div class="section-title"><i class="icon fa fa-calendar" aria-hidden="true"></i>State, LGA, Ward</div>-->
 <!--                      <div class="section-body __indent">--><?php //echo ucwords($row['states']).','.ucwords($row['lga']).','.ucwords($row['ward']); ?><!--</div>-->
 <!--                  </div>-->
-                <div class="section">
-                  <div class="section-title"><i class="icon fa fa-user" aria-hidden="true"></i> Occupation</div>
-                  <div class="section-body __indent"><?php echo ucwords($row['works']); ?></div>
-                </div>
-                  <div class="section">
-                      <div class="section-title"><i class="icon fa fa-map-marker" aria-hidden="true"></i> Address</div>
-                      <div class="section-body __indent"><?php echo ucwords($row['address']); ?></div>
-                  </div>
-                  <div class="section">
-                      <div class="section-title"><i class="icon fa fa-phone" aria-hidden="true"></i> Phone Number</div>
-                      <div class="section-body __indent"><?php echo ucwords($row['phone']); ?></div>
-                  </div>
+<!--                <div class="section">-->
+<!--                  <div class="section-title"><i class="icon fa fa-user" aria-hidden="true"></i> Occupation</div>-->
+<!--                  <div class="section-body __indent">--><?php //echo ucwords($row['works']); ?><!--</div>-->
+<!--                </div>-->
+<!--                  <div class="section">-->
+<!--                      <div class="section-title"><i class="icon fa fa-map-marker" aria-hidden="true"></i> Address</div>-->
+<!--                      <div class="section-body __indent">--><?php //echo ucwords($row['address']); ?><!--</div>-->
+<!--                  </div>-->
+<!--                  <div class="section">-->
+<!--                      <div class="section-title"><i class="icon fa fa-phone" aria-hidden="true"></i> Phone Number</div>-->
+<!--                      <div class="section-body __indent">--><?php //echo ucwords($row['phone']); ?><!--</div>-->
+<!--                  </div>-->
                   <?php }?>
 <!--                <div class="section">-->
 <!--                  <div class="section-title"><i class="icon fa fa-book" aria-hidden="true"></i> Education</div>-->

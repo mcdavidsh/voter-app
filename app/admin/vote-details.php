@@ -38,6 +38,7 @@ if ($row['profile']== NULL or $row['profile']==""){
 
         <!--Notification-->
         <div class="row">
+
             <div class="col-md-6 shadow-lg">
                 <div class="card card-mini">
                     <div class="card-header">

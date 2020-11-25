@@ -11,9 +11,10 @@ if(strlen($adlogin)==0)
 else {
     if (isset($_POST['submit']))
     {
-        $catname = $_POST ['cat-name'];
-        $catdesc = $_POST ['cat-desc'];
+        $catname = ($_POST ['cat-name']);
+        $catdesc = ($_POST ['cat-desc']);
         $status= 0;
+
         $query = mysqli_query($con, "insert into contestcat(catname,catdesc,status) values ('$catname', '$catdesc','$status') ");
 
         if (!$query){
@@ -40,7 +41,7 @@ if(isset($_GET['del']))
     ?>
 </head>
 <body>
-<div class="app app-default" style="overflow-y: scroll; min-height: 900px ; ">
+<div class="app app-default" >
 
     <?php include "../../library/include/app/ad-nav.php"; ?>
 

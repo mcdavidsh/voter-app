@@ -38,17 +38,17 @@ if ($hour > 17) {
     <?php
     include "../../library/include/app/header.php";
     ?>
+
 </head>
 <body>
-<div class="app app-default" style="overflow-y: scroll; height: 500px;">
+<div class="app app-default" style="overflow-y: scroll; height: 500px;" >
 
     <?php include "../../library/include/app/nav.php"; ?>
 
-    <div class="app-container">
+    <div class="app-container" id="app" data-state="closed">
 
         <?php include "../../library/include/app/topnav.php"; ?>
 
-        <!--Notification-->
 
 
         <!--    Notification-->
@@ -79,11 +79,17 @@ if ($hour > 17) {
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12"  data-toggle="tooltip" data-placement="bottom" title="Election in progress">
                 <a class="card">
+                    <div class="badge badge-warning">Ongoing Election(s)</div>
 
+<?php $status= 1;
+$qt=mysqli_query($con, "select * from contestcat where status = '$status'");
+ $num= mysqli_num_rows($qt);{
+?>
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">3</div>
-                        <div class="text-capitalize ">In-Progress</div>
+                        <div class="text-decoration-none"><?php echo $num;?></div>
+
                     </div>
+                    <?php }?>
                 </a>
 
             </div>
@@ -99,15 +105,27 @@ if ($hour > 17) {
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" data-toggle="tooltip" data-placement="bottom" title="This is Elections you have voted in.">
                 <a class="card">
+                    <div class="badge badge-success">Participated Election(s)</div>
+                    <?php
+                    $signed=1;
+                    $pt=mysqli_query($con, "select * from votes where voterid='".$_SESSION['id']."'");
+                    $num= mysqli_num_rows($pt);{
+                    ?>
                     <div class="card-body text-center vt-box">
-                        <div class="text-decoration-none">0</div>
-                        <div class="text-capitalize ">Participation</div>
+                        <div class="text-decoration-none"><?php echo $num;?></div>
                     </div>
+                    <?php }?>
                 </a>
 
             </div>
         </div>
 
 
-        <?php include "../../library/include/app/footer.php" ?>
+
+
+        <?php
+        include "../../library/include/app/footer.php";
+        ?>
+
+
 <?php }?>

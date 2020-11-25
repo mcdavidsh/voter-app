@@ -11,6 +11,11 @@ while($row=mysqli_fetch_array($query)) {
 <?php }?>
 <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/vendor.css">
 <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/flat-admin.css">
+<link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/filepond.min.css">
+<link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/filepond.min.css">
+<link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/img-upload.css">
 <link rel="stylesheet" href="../../library/assets/home/css/custom.css">
 
 
+
+<link rel="stylesheet" type="text/css" href="notification/notify.css">

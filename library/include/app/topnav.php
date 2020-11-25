@@ -20,12 +20,7 @@
                 <li class="navbar-title"><?php echo $breadcrumb;?></li>
             </ul>
 
-<ul class="nav navbar-nav navbar-center" style="margin-left: 200px; font-size: 15px;">
-    <span class="text-danger" style="margin-right: 10px;">Notice: </span>
-    <div class="badge badge-success text-center">
-        Voter Registration Ends in 65 days
-    </div>
-</ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <?php
                 $query=mysqli_query($con,"select fullname from voters where email='".$_SESSION['vtlogin']."' or phone='".$_SESSION['vtlogin']."'");
@@ -56,4 +51,27 @@
         </div>
     </div>
 </nav>
+<!--Notification-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="content card text-uppercase">
+            <div class="simple-marquee-container">
+                <div class="marquee-sibling">
+                    NOTICE
+                </div>
+                <div class="marquee">
+                    <ul class="marquee-content-items">
+                        <?php $ct =mysqli_query($con, "select * from news");
+                        while($ctye = mysqli_fetch_array($ct)){
+                            ?>
+                            <li> <?php echo $ctye['title']?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 

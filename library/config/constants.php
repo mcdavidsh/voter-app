@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 2000)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time
     session_destroy();   // destroy session data in storage
@@ -20,6 +20,9 @@ $sitelogo = '<img src="library/assets/home/img/page/default/logo.png" class="vt-
 //App Panel
 $sitelogo_app = '<img src="../../library/assets/home/img/page/default/logo.png" class="vt-logo"> ';
 $user_avatar ='../../library/assets/app/assets/images/pages/voter/avatar.png';
+//Notification
+
+
 
 //Home Links
 $homepage = 'index.php';
@@ -42,7 +45,12 @@ $exit ='logout.php';
 
 //Contestant Links
 $ctlogin = isset($_SESSION['ctlogin']);
-
+$cetlogin = 'login.php';
+$cetreg = 'app/contestant/register.php';
+$contest = 'contest.php';
+$electresult = 'result.php';
+$votebo ='vote-booth.php';
+$votedet ='vote-details.php';
 //Admin Links
 $adlogin = isset($_SESSION['adlogin']);
 $contestcat = 'contest-category.php';
@@ -53,7 +61,7 @@ $adminprofile = 'admin.php';
 $contestprofile = 'contestants.php';
 $votersprofile = 'voters.php';
 $votes = 'votes.php';
-$settings = 'profile.php';
+$settings = 'settings.php';
 
 
 

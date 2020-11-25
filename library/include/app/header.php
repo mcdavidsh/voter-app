@@ -18,5 +18,9 @@ while($row=mysqli_fetch_array($query)) {
 <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/filepond.min.css">
 <link rel="stylesheet" type="text/css" href="../../library/assets/app/assets/css/image-upload/nornalize.min.css">
 <link rel="stylesheet" href="../../library/assets/home/css/custom.css">
+<link rel="stylesheet" type="text/css" href="notification/notify.css">
 
 
+<style>
+
+</style>

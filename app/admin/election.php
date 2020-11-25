@@ -55,9 +55,6 @@ if(isset($_GET['stp']))
         </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
-
-            </div>
             <div class=" col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <a class="card">
 
@@ -69,6 +66,21 @@ if(isset($_GET['stp']))
                         <div class="text-decoration-none"><?php echo htmlentities($num1);?></div>
 
                         <div class="text-capitalize ">Total Contests</div>
+                    </div>
+                </a>
+
+            </div>
+            <div class=" col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <a class="card">
+
+                    <?php
+                    $query= mysqli_query($con, "select * from contestreg");
+                    $num1=mysqli_num_rows($query);
+                    ?>
+                    <div class="card-body text-center vt-box">
+                        <div class="text-decoration-none"><?php echo htmlentities($num1);?></div>
+
+                        <div class="text-capitalize ">Total Registered Contests</div>
                     </div>
                 </a>
 
@@ -88,11 +100,8 @@ if(isset($_GET['stp']))
                     </div>
                 </a>
             </div>
-            <div class="col-md-2">
-
-            </div>
         </div>
-            <div class="row p-t-50" style="padding: 20px;">
+            <div class="row" style="padding: 20px;">
                 <div class="col-xs-12">
                     <div class="card">
                         <div class="card-header">
