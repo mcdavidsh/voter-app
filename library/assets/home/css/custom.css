@@ -21,6 +21,15 @@ html, body {
     top: 50%;
     left: 50%;
 }
+.home-link a {
+ color: #18aa4a;
+   font-weight: 600;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+.home-link a:hover {
+    text-decoration: none;
+    color: #29c75f;
+}
 .vt-logo {
     width: 90px;
     height: auto;

@@ -127,8 +127,7 @@ echo '
     <footer class="app-footer text-center">
         <div class="row">
             <div class="col-xs-12">
-                <div class="footer-copyright">
-                    Copyright &copy; <?php echo $sitename .' '.date('Y') ;?>
+                <div class="footer-copyright">&copy; <?php echo $sitename .' '.date('Y') ;?> - <a href="https://blockchain.com/btc/payment_request?address=1Jwz6V8tAL7UfwoAN2AAYE9tS8dMbWWhfq&amount=0.00052530&message=Donation" target="_parent" autofocus rel="license">Softhood</a>
                 </div>
             </div>
         </div>

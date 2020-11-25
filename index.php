@@ -52,14 +52,19 @@ include "library/config/constants.php";
             <div class="col-md-3 col-sm-12">
                 <a href="<?php echo $voterlogin;?>" class="btn btn-success">VOTE</a>
             </div>
-            <div class="col-md-3 col-sm-4">
-                <a href="#">
-                <i class="icon icon-desktop2"></i>
+            <div class="col-md-2 home-link">
+                <a href="<?php echo $blog;?>" class="text-capitalize">
+                <i class="icon icon-newspaper"></i>
                 News</a>
             </div>
-            <div class="col-md-3 col-sm-4">
-                <i class="icon icon-settings"></i>
-                <a>About</a>
+            <div class="col-md-2 home-link">
+                <a href="<?php echo $report;?>" class="text-capitalize">
+                    <i class="icon icon-warning2"></i>
+                    Report Fraud</a>
+            </div>
+            <div class="col-md-2 home-link"><a href="<?php echo $about;?>" class="text-capitalize">
+                <i class="icon icon-info_outline"></i>
+                About</a>
             </div>
             <div class="col-md-3 col-sm-12">
 <!--                <a href="#" href="#" class="btn btn-success">REGISTER</a>-->

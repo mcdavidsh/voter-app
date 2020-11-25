@@ -72,10 +72,18 @@ else {
 
                             <div class="form-group">
                                 <div class="col-md-6">
-                                <label class="form-control-label">Party Logo</label>
+
                                 <?php
                                 $partyimg = $row['partylogo'];
-                                if ($partyimg=="") echo '<div class="label label-danger">No Logo Found</div>'; else { echo "<img src='../../library/assets/app/uploads/$partyimg' class='img-thumbnail img-circle img-responsive img-rounded' width='70'>";};?>
+                                if ($partyimg=="") {
+                                    ?>
+                                    <div class="label label-danger">No Logo Found</div>;
+                                    <label>Upload Image</label>
+                                    <input type="file" class="form-control" name="image">
+                                   <?php  }else { ?>
+                                    <label class="form-control-label">Party Logo</label>
+                                    <img src='../../library/assets/app/uploads/<?php echo $partyimg?>' class='img-thumbnail img-circle img-responsive img-rounded' width='70'>
+                                    <?php }?>
                                 <input type="file" name="part-logo" value="" class="form-control" required>
                             </div>
                             </div>

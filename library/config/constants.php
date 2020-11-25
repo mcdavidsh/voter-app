@@ -34,6 +34,9 @@ $preloader = '<div id="loader" class="loader">
 $voterlogin = 'login.php';
 $voterreg = 'register.php';
 $voterrecovery = 'forgot-password.php';
+$about ='about.php';
+$report ='contact.php';
+$blog ='blog.php';
 
 //Voter Links
 $vtlogin = isset($_SESSION['vtlogin']);

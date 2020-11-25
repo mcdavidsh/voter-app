@@ -10,10 +10,14 @@ if(strlen($adlogin)==0)
 
 else {
     if (isset($_POST['submit'])) {
+        $id=intval($_GET['id']);
         $catname= $_POST['title'];
         $catdesc= $_POST['body'];
-        $id=intval($_GET['id']);
-        $query=mysqli_query($con, "update news set title='$catname', body='$catdesc' where id='$id'");
+        $image = $_FILES['image']['name'];
+
+        move_uploaded_file($_FILES["image"]["tmp_name"], "../../library/assets/app/uploads/".$_FILES["image"]["name"]);
+
+        $query=mysqli_query($con, "update news set title='$catname', body='$catdesc', image='$image' where id='$id'");
         if (!$query){
             $errormsg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Error updating news. Check and try again</div>';
         }
@@ -44,7 +48,7 @@ else {
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            Edit Contest Category
+                      Edit News
                         </div>
                     </div> <?php
                     $id=intval($_GET['id']);
@@ -64,16 +68,35 @@ else {
                             echo $errormsg;}
                         unset($errormsg);
                         ?>
-                        <form class="form-horizontal" method="post">
+                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <div class="col-md-6">
-                                    <label class="form-control-label">Contest Category Name</label>
+                                    <?php
+                                    $img = $row['image'];
+                                    if ($img==""){?>
+                                        <div class="label label-danger">No Image Found</div> -
+<label>Add Featured Image</label>
+<input type="file" class="form-control" name="image" value="<?php echo $img;?>">
+';
+                                    <?php }
+                                    else {
+                                    ?>
+                                        <label class="form-control-label">News Image</label>
+                                    <img src="../../library/assets/app/uploads/<?php echo $row['image'];?>" class="img-responsive img-fluid img-thumbnail" width="250">
+<br>
+                                        <input type="file" class="form-control" name="image" value="<?php echo $img;?>">
+                                 <?php } ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="form-control-label">News Title</label>
                                     <input class="form-control" type="text" value="<?php echo $row['title'];?>" placeholder="Enter Category Name" name="title">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6">
-                                    <label class="form-control-label">Contest Category Name</label>
+                                    <label class="form-control-label">News Body</label>
                                     <textarea class="form-control" rows="8" value="" placeholder="Enter Category Description" name="body"><?php echo $row['body'];?></textarea>
                                 </div>
                             </div>

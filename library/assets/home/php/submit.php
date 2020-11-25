@@ -1,5 +1,5 @@
 <?php
-$your_email = "naumanahmed19@gmail.com";
+$your_email = "mcdave92@gmail.com";
 
 use PHPMailer\PHPMailer\PHPMailer;
 require('phpMailer/PHPMailer.php');
@@ -40,9 +40,9 @@ if (!empty($_POST)) {
     $mail->Body .= $_POST['message'];
 
     if (!$mail->Send()) {
-        echo "Error sending: " . $mail->ErrorInfo;;
+        $errormsg = "<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button> Email Not Sent $mail->ErrorInfo</div>";
     } else {
-        echo 'Message has been sent';
+        $successmsg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button> Email Sent Successfully</div>";
     }
 }
 

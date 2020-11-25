@@ -12,8 +12,11 @@ else {
     if (isset($_POST['submit'])) {
         $title = $_POST['title'];
         $body = $_POST['body'];
+        $image = $_FILES['image']['name'];
 
-        $query = mysqli_query($con, "insert into news(title,body) values ('$title','$body')");
+        move_uploaded_file($_FILES["image"]["tmp_name"], "../../library/assets/app/uploads".$_FILES["image"]["name"]);
+
+        $query = mysqli_query($con, "insert into news(title,body,image) values ('$title','$body','$image')");
 
         if (!$query) {
             $successmsg = '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>News Posted successfully.</div>';
@@ -73,10 +76,14 @@ if(isset($_GET['del']))
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Add Notification</h4>
+                        <h4 class="modal-title">Add News</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" class="form-horizontal">
+                        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="form-control-label">Featured Image</label>
+                                <input type="file" name="image" class="form-control">
+                            </div>
                             <div class="form-group">
                                 <label class="form-control-label">Title</label>
                                 <input type="text" name="title" class="form-control" placeholder="Enter Title">
